@@ -13,181 +13,126 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
     
     <style>
-        :root { --fire: #ff4d00; --gold: #e2b04a; --bg: #0a0a0a; --royal: #ffd700; --coal: #1a1a1a; }
+        :root { --fire: #ff4d00; --gold: #e2b04a; --bg: #0a0a0a; --royal: #ffd700; }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Vazirmatn', sans-serif; }
         body { background: var(--bg); color: #fff; min-height: 100vh; padding: 15px; background-image: radial-gradient(circle at 50% 0%, #3a1100 0%, #0a0a0a 80%); display: flex; flex-direction: column; align-items: center; padding-bottom: 50px; }
         
-        /* تیکر تبلیغاتی */
-        .ticker-container { width: 100%; max-width: 500px; background: linear-gradient(90deg, #000, #1a1a1a, #000); border-bottom: 4px solid var(--gold); border-top: 2px solid var(--gold); overflow: hidden; white-space: nowrap; padding: 15px 0; margin-bottom: 20px; position: relative; border-radius: 12px; }
+        /* تیکر */
+        .ticker-container { width: 100%; max-width: 500px; background: #000; border-bottom: 3px solid var(--gold); overflow: hidden; white-space: nowrap; padding: 15px 0; margin-bottom: 20px; border-radius: 12px; }
         .ticker-text { display: inline-block; padding-right: 100%; animation: marquee 20s linear infinite; color: var(--gold); font-size: 18px; font-weight: bold; }
         @keyframes marquee { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
 
         /* هدر */
         .header-section { text-align: center; margin-bottom: 25px; width: 100%; max-width: 450px; }
         .main-logo { width: 100px; height: 100px; border-radius: 50%; border: 3px solid var(--gold); object-fit: cover; box-shadow: 0 0 20px rgba(226, 176, 74, 0.5); }
-        .brand-name { font-size: 32px; font-weight: 900; color: var(--gold); text-shadow: 0 0 10px rgba(255, 77, 0, 0.5); }
-        .brand-slogan { font-size: 16px; color: var(--royal); font-weight: 600; margin-bottom: 20px; }
+        .brand-name { font-size: 32px; font-weight: 900; color: var(--gold); margin-top: 10px; }
 
         /* استوری‌ها */
         .stories-container { display: flex; gap: 15px; padding: 15px 5px; overflow-x: auto; width: 100%; max-width: 450px; scrollbar-width: none; }
         .story-item { display: flex; flex-direction: column; align-items: center; min-width: 80px; cursor: pointer; }
-        .story-ring { width: 70px; height: 70px; border-radius: 50%; padding: 3px; border: 2px solid #333; display: flex; align-items: center; justify-content: center; }
-        .story-ring.active { background: linear-gradient(45deg, #f09433, #dc2743, #bc1888); border: none; padding: 2px; }
+        .story-ring { width: 70px; height: 70px; border-radius: 50%; padding: 2px; background: linear-gradient(45deg, #f09433, #dc2743, #bc1888); }
         .story-ring img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 2px solid #000; }
         .story-title { font-size: 12px; color: #ccc; margin-top: 5px; }
 
-        /* تبلیغ VIP */
-        .vip-ad-card { width: 100%; max-width: 450px; background: rgba(255, 255, 255, 0.05); border: 2px solid var(--gold); border-radius: 20px; padding: 15px; margin: 10px 0 20px 0; display: flex; align-items: center; gap: 15px; animation: blinkBorder 3s infinite; }
-        @keyframes blinkBorder { 0%, 100% { border-color: var(--gold); } 50% { border-color: #fff; } }
+        /* VIP */
+        .vip-ad-card { width: 100%; max-width: 450px; background: rgba(255, 255, 255, 0.05); border: 2px solid var(--gold); border-radius: 20px; padding: 15px; margin-bottom: 20px; display: flex; align-items: center; gap: 15px; }
         .vip-img { width: 80px; height: 80px; border-radius: 15px; object-fit: cover; }
         .btn-call-vip { background: #25D366; color: white; border: none; padding: 8px 15px; border-radius: 10px; font-size: 12px; text-decoration: none; font-weight: bold; }
 
         /* فرم */
-        .order-card { width: 100%; max-width: 450px; background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(15px); border-radius: 25px; border: 1px solid rgba(255, 255, 255, 0.1); padding: 25px; }
-        .form-group { margin-bottom: 20px; text-align: right; }
-        .form-input, .form-textarea { width: 100%; padding: 15px; background: rgba(0,0,0,0.6); border: 1px solid #333; border-radius: 12px; color: #fff; text-align: right; outline: none; }
-        .btn { width: 100%; padding: 18px; border: none; border-radius: 15px; font-weight: bold; cursor: pointer; transition: 0.3s; text-align: center; text-decoration: none; display: block; }
-        .btn-gold { background: linear-gradient(135deg, var(--gold), #b8860b); color: #000; margin-top: 20px; }
-        .invoice-card { background: #1a1a1a; border: 3px double var(--gold); border-radius: 20px; padding: 20px; display: none; margin-top: 20px; }
+        .order-card { width: 100%; max-width: 450px; background: rgba(255, 255, 255, 0.03); border-radius: 25px; border: 1px solid rgba(255, 255, 255, 0.1); padding: 25px; }
+        .form-input, .form-textarea { width: 100%; padding: 15px; margin-bottom: 15px; background: rgba(0,0,0,0.6); border: 1px solid #333; border-radius: 12px; color: #fff; text-align: right; outline: none; }
+        .btn-gold { width: 100%; padding: 18px; border: none; border-radius: 15px; font-weight: bold; cursor: pointer; background: linear-gradient(135deg, var(--gold), #b8860b); color: #000; font-size: 16px; }
 
-        /* بنر نصب اپلیکیشن */
-        .pwa-banner { position: fixed; bottom: 20px; left: 15px; right: 15px; background: #141414; border: 2px solid var(--gold); border-radius: 20px; padding: 15px; z-index: 2000; display: none; align-items: center; gap: 10px; box-shadow: 0 0 20px #000; }
-        
-        .site-footer { width: 100%; max-width: 450px; text-align: center; padding: 25px; border-top: 1px solid #333; margin-top: 30px; }
+        /* بنر نصب */
+        .pwa-banner { position: fixed; bottom: 20px; left: 15px; right: 15px; background: #141414; border: 2px solid var(--gold); border-radius: 20px; padding: 15px; z-index: 2000; display: none; align-items: center; gap: 10px; }
     </style>
 </head>
 <body>
 
     <div class="ticker-container">
-        <div class="ticker-text" id="ticker-content">در حال لود تبلیغات ویژه...</div>
+        <div class="ticker-text" id="ticker-content">در حال دریافت اطلاعات...</div>
     </div>
 
     <div id="pwa-banner" class="pwa-banner">
         <img src="https://raw.githubusercontent.com/alooooooozoghal-maker/alozoghal/main/8f6dcedf3dc3dbaa82c0df548bd962c9.jpg" width="50" style="border-radius:10px">
-        <div style="flex:1; font-size:12px"><b>نصب برنامه الو ذغال</b><br>برای دسترسی سریع و آسان</div>
-        <button id="installBtn" class="btn" style="width:auto; padding:8px 15px; background:var(--gold); color:black; font-size:12px">نصب</button>
+        <div style="flex:1; font-size:12px"><b>نصب اپلیکیشن الو ذغال</b></div>
+        <button id="installBtn" style="background:var(--gold); border:none; padding:8px 15px; border-radius:10px; font-weight:bold">نصب</button>
     </div>
 
     <div class="header-section">
         <img src="https://raw.githubusercontent.com/alooooooozoghal-maker/alozoghal/main/8f6dcedf3dc3dbaa82c0df548bd962c9.jpg" class="main-logo">
         <div class="brand-name">الو ذغال</div>
-        <div class="brand-slogan">سفارش آنلاین و سریع ذغال در ایذه</div>
         <div class="stories-container" id="stories-list"></div>
     </div>
 
     <div id="vip-space"></div>
 
     <div class="order-card">
-        <div id="form-area">
-            <div class="form-group">
-                <input type="text" id="custName" class="form-input" placeholder="نام و نام خانوادگی..." oninput="checkAdminAccess()">
-            </div>
-            <div class="form-group">
-                <input type="tel" id="custPhone" class="form-input" placeholder="شماره تماس...">
-            </div>
-            <div class="form-group">
-                <textarea id="custAddr" class="form-textarea" placeholder="آدرس دقیق جهت ارسال..."></textarea>
-            </div>
-            <button class="btn btn-gold" onclick="generateInvoice()">✨ ثبت و مشاهده فاکتور</button>
-        </div>
-
-        <div id="invoice" class="invoice-card">
-            <h3 style="text-align:center; color:var(--gold)">📑 فاکتور سفارش</h3>
-            <div id="invoice-details" style="margin:15px 0; line-height:2"></div>
-            <button class="btn" style="background:#25D366; color:white" onclick="sendToWhatsApp()">📱 تایید و ارسال در واتساپ</button>
-            <button class="btn" style="background:#444; color:white; margin-top:10px" onclick="location.reload()">🔄 سفارش جدید</button>
-        </div>
+        <input type="text" id="custName" class="form-input" placeholder="نام و نام خانوادگی..." oninput="checkAdmin(this.value)">
+        <input type="tel" id="custPhone" class="form-input" placeholder="شماره تماس...">
+        <textarea id="custAddr" class="form-textarea" placeholder="آدرس دقیق..."></textarea>
+        <button class="btn-gold" onclick="sendToWhatsApp()">ثبت و ارسال در واتساپ</button>
     </div>
 
-    <footer class="site-footer">
-        <p>📍 ایذه، پارک لاله | 📞 ۰۹۲۲۰۷۳۰۶۲۸</p>
-        <p style="font-size:10px; color:#666; margin-top:10px">تمامی حقوق برای الو ذغال محفوظ است</p>
-    </footer>
-
     <script>
-        // ورود مخفی به پنل
-        function checkAdminAccess() {
-            const val = document.getElementById('custName').value;
-            if(val === "علی نادریان ۱۳۶۲۵۴۱") {
-                window.location.href = 'admin-panel.html';
-            }
-        }
+        // لینک اختصاصی شما
+        const dataUrl = 'https://raw.githubusercontent.com/alooooooozoghal-maker/Alooooooooooooo/refs/heads/main/data.json';
 
-        // لود محتوای داینامیک از پنل مدیریت
-        function loadContent() {
-            const ticker = localStorage.getItem('aloo_ticker');
-            if(ticker) document.getElementById('ticker-content').innerText = ticker;
+        async function loadData() {
+            try {
+                const response = await fetch(dataUrl);
+                const data = await response.json();
+                
+                document.getElementById('ticker-content').innerText = data.ticker;
 
-            const stories = JSON.parse(localStorage.getItem('aloo_stories') || '[]');
-            const storiesList = document.getElementById('stories-list');
-            if(stories.length > 0) {
-                storiesList.innerHTML = stories.map(s => `
+                const storiesList = document.getElementById('stories-list');
+                storiesList.innerHTML = data.stories.map(s => `
                     <div class="story-item" onclick="window.open('tel:${s.phone}')">
-                        <div class="story-ring active"><img src="${s.img}"></div>
+                        <div class="story-ring"><img src="${s.img}"></div>
                         <div class="story-title">${s.title}</div>
                     </div>
                 `).join('');
-            }
 
-            const vip = JSON.parse(localStorage.getItem('aloo_vip') || 'null');
-            if(vip) {
-                document.getElementById('vip-space').innerHTML = `
-                    <div class="vip-ad-card">
-                        <img src="${vip.img}" class="vip-img">
-                        <div class="vip-info">
-                            <h4 style="color:var(--gold)">${vip.title}</h4>
-                            <p style="font-size:12px; color:#ccc">${vip.desc}</p>
-                            <a href="tel:${vip.phone}" class="btn-call-vip">📞 تماس با آگهی</a>
-                        </div>
-                    </div>`;
-            }
+                if(data.vip) {
+                    document.getElementById('vip-space').innerHTML = `
+                        <div class="vip-ad-card">
+                            <img src="${data.vip.img}" class="vip-img">
+                            <div style="flex:1">
+                                <h4 style="color:var(--gold)">${data.vip.title}</h4>
+                                <p style="font-size:12px; color:#ccc; margin-bottom:8px">${data.vip.desc}</p>
+                                <a href="tel:${data.vip.phone}" class="btn-call-vip">تماس با آگهی</a>
+                            </div>
+                        </div>`;
+                }
+            } catch (e) { console.error("Error loading data"); }
         }
 
-        function generateInvoice() {
-            const name = document.getElementById('custName').value;
-            const phone = document.getElementById('custPhone').value;
-            const addr = document.getElementById('custAddr').value;
-            if(!name || !phone || !addr) return alert('لطفاً اطلاعات را کامل وارد کنید');
-
-            document.getElementById('invoice-details').innerHTML = `
-                <b>👤 مشتری:</b> ${name}<br>
-                <b>📞 شماره تماس:</b> ${phone}<br>
-                <b>🏠 آدرس:</b> ${addr}<br>
-                <b>⏰ زمان ثبت:</b> ${new Date().toLocaleTimeString('fa-IR')}
-            `;
-            document.getElementById('form-area').style.display = 'none';
-            document.getElementById('invoice').style.display = 'block';
+        function checkAdmin(val) {
+            if(val === "علی نادریان ۱۳۶۲۵۴۱") window.location.href = 'admin-panel.html';
         }
 
         function sendToWhatsApp() {
             const name = document.getElementById('custName').value;
             const phone = document.getElementById('custPhone').value;
             const addr = document.getElementById('custAddr').value;
-            const msg = `سلام الو ذغال، سفارش جدید دارم:\nنام: ${name}\nتماس: ${phone}\nآدرس: ${addr}`;
-            window.open(`https://wa.me/989220730628?text=${encodeURIComponent(msg)}`);
+            if(!name || !phone || !addr) return alert('لطفا فرم را پر کنید');
+            const text = `سفارش جدید:\nنام: ${name}\nتلفن: ${phone}\nآدرس: ${addr}`;
+            window.open(`https://wa.me/989220730628?text=${encodeURIComponent(text)}`);
         }
 
-        // سیستم نصب PWA
+        // PWA logic
         let deferredPrompt;
         window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
+            e.preventDefault(); deferredPrompt = e;
             document.getElementById('pwa-banner').style.display = 'flex';
         });
-
-        document.getElementById('installBtn').addEventListener('click', async () => {
-            if (deferredPrompt) {
-                deferredPrompt.prompt();
-                const { outcome } = await deferredPrompt.userChoice;
-                document.getElementById('pwa-banner').style.display = 'none';
-                deferredPrompt = null;
-            }
+        document.getElementById('installBtn').addEventListener('click', () => {
+            if(deferredPrompt) { deferredPrompt.prompt(); deferredPrompt = null; }
         });
 
-        window.onload = () => {
-            loadContent();
-            if ('serviceWorker' in navigator) { navigator.serviceWorker.register('sw.js'); }
-        };
+        window.onload = loadData;
+        if ('serviceWorker' in navigator) { navigator.serviceWorker.register('sw.js'); }
     </script>
 </body>
 </html>
