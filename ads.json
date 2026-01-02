@@ -1,28 +1,20 @@
 {
-  "ticker": "تست الو ذغال",
   "ads": [
+    {
+      "title": "لباس فوکس",
+      "tickerText": "تست الوذغال",
+      "desc": "تخفیف فوکس",
+      "img": "https://s6.uupload.ir/files/screenshot_۲۰۲۶۰۱۰۲_۰۸۴۳۴۵_instagram_rju.jpg",
+      "phone": "09370214819",
+      "link": "https://www.instagram.com/boutique.fox8?igsh=MWlvenlpbHBxNXRzag=="
+    },
     {
       "title": "",
+      "tickerText": "",
       "desc": "",
       "img": "",
-      "phone": ""
-    }
-  ]
-}
-
-
-
-
-
-
-{
-  "ticker": "",
-  "ads": [
-    {
-      "title": "فروشگاه فوکس",
-      "desc": "کالکشن های روز",
-      "img": "https://s6.uupload.ir/files/screenshot_۲۰۲۶۰۱۰۲_۰۸۴۳۴۵_instagram_hhv9.jpg",
-      "phone": "09336202228"
+      "phone": "",
+      "link": ""
     }
   ]
 }
