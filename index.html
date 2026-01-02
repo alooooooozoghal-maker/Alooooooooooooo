@@ -9,295 +9,345 @@
     <link rel="icon" href="https://raw.githubusercontent.com/aloozoghal-hash/alozoghal/main/8f6dcedf3dc3dbaa82c0df548bd962c9.jpg">
     <style>
         @import url('https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css');
-        :root { --fire: #ff4d00; --gold: #e2b04a; --bg: #050505; --dark-card: rgba(20, 20, 20, 0.9); }
+        :root { --fire: #ff4d00; --gold: #e2b04a; --bg: #050505; --royal: #ffd700; }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Vazirmatn', sans-serif; }
 
         body {
             background: var(--bg); color: #fff; min-height: 100vh;
             background-image: radial-gradient(circle at 50% 0%, #3a1100 0%, #050505 80%);
-            display: flex; flex-direction: column; align-items: center; padding: 20px;
+            display: flex; flex-direction: column; align-items: center; padding: 15px;
         }
 
-        /* Ticker Ads */
-        .ticker-wrap {
-            width: 100%; overflow: hidden; background: rgba(226, 176, 74, 0.1);
-            border: 1px solid var(--gold); border-radius: 10px; margin-bottom: 20px; padding: 10px;
+        /* متن متحرک با افکت چشمک‌زن */
+        .ticker-container {
+            width: 100%; background: rgba(226, 176, 74, 0.1); border: 1px solid var(--gold);
+            border-radius: 50px; overflow: hidden; white-space: nowrap; padding: 10px; margin-bottom: 20px;
+            box-shadow: 0 0 15px rgba(226, 176, 74, 0.2);
         }
-        .ticker { display: inline-block; white-space: nowrap; animation: marquee 15s linear infinite; color: var(--gold); }
+        .ticker-text {
+            display: inline-block; animation: marquee 20s linear infinite; color: var(--gold);
+            font-weight: bold; text-shadow: 0 0 5px var(--fire);
+        }
         @keyframes marquee { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
 
-        /* Stories */
-        .stories-container {
+        /* استوری‌ها */
+        .stories-wrapper {
             display: flex; gap: 15px; overflow-x: auto; width: 100%; max-width: 450px;
-            padding: 10px 0; scrollbar-width: none;
+            padding: 10px 5px; scrollbar-width: none; margin-bottom: 20px;
         }
-        .story { min-width: 80px; text-align: center; cursor: pointer; }
+        .story-item { min-width: 75px; cursor: pointer; text-align: center; }
         .story-ring {
             width: 70px; height: 70px; border-radius: 50%; padding: 3px;
-            background: linear-gradient(45deg, #f09433, #e2b04a, #ff4d00);
+            background: linear-gradient(45deg, #f09433, #e2b04a, #dc2743);
             display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 0 10px rgba(226, 176, 74, 0.4);
         }
-        .story img { width: 100%; height: 100%; border-radius: 50%; border: 2px solid #000; object-fit: cover; }
-        .story span { font-size: 10px; display: block; margin-top: 5px; color: #ccc; }
+        .story-ring img { width: 100%; height: 100%; border-radius: 50%; border: 2px solid #000; object-fit: cover; }
+        .story-item span { font-size: 11px; color: #eee; margin-top: 5px; display: block; }
 
-        /* Header */
-        .header { text-align: center; margin-bottom: 30px; }
-        .logo-circle {
-            width: 120px; height: 120px; border-radius: 50%;
-            border: 3px solid var(--gold); box-shadow: 0 0 20px rgba(226, 176, 74, 0.5);
-            margin-bottom: 15px;
+        /* مودال استوری (اینستاگرامی) */
+        #story-modal {
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: #000; z-index: 9999; flex-direction: column; justify-content: center; align-items: center;
         }
-        .brand-row { display: flex; align-items: center; justify-content: center; gap: 15px; }
-        .fire { font-size: 30px; animation: flicker 1.5s infinite alternate; }
-        @keyframes flicker {
-            0% { transform: scale(1); opacity: 0.8; filter: drop-shadow(0 0 5px red); }
-            100% { transform: scale(1.2); opacity: 1; filter: drop-shadow(0 0 15px orange); }
-        }
-        .brand-name { font-size: 32px; font-weight: 900; color: var(--gold); }
+        .story-content { position: relative; width: 100%; max-width: 450px; height: 80vh; border-radius: 15px; overflow: hidden; }
+        .story-img { width: 100%; height: 100%; object-fit: cover; }
+        .story-progress-container { position: absolute; top: 15px; left: 5%; width: 90%; display: flex; gap: 5px; z-index: 10; }
+        .story-progress-bg { flex: 1; height: 3px; background: rgba(255,255,255,0.3); border-radius: 2px; overflow: hidden; }
+        .story-progress-fill { height: 100%; width: 0%; background: #fff; }
+        .story-close { position: absolute; top: 25px; right: 20px; font-size: 30px; color: #fff; cursor: pointer; z-index: 11; }
+        .story-info { position: absolute; bottom: 0; left: 0; width: 100%; padding: 30px 20px; background: linear-gradient(transparent, rgba(0,0,0,0.9)); text-align: center; }
+        .btn-call-story { background: #25D366; color: white; padding: 12px 25px; border-radius: 50px; text-decoration: none; font-weight: bold; display: inline-block; margin-top: 10px; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4); }
 
-        /* Order Card */
-        .card {
-            width: 100%; max-width: 400px; background: var(--dark-card);
-            border-radius: 25px; border: 1px solid rgba(255,255,255,0.1);
-            padding: 25px; backdrop-filter: blur(10px);
+        /* طراحی برندینگ */
+        .logo-area { text-align: center; margin-bottom: 25px; }
+        .main-logo { width: 110px; height: 110px; border-radius: 50%; border: 3px solid var(--gold); box-shadow: 0 0 25px rgba(226,176,74,0.6); }
+        .brand-container { display: flex; align-items: center; justify-content: center; gap: 10px; margin-top: 10px; }
+        .fire-anim { font-size: 28px; animation: heat 1s infinite alternate; }
+        @keyframes heat { from { transform: scale(1); filter: brightness(1); } to { transform: scale(1.3); filter: brightness(1.5) drop-shadow(0 0 10px orange); } }
+        
+        /* کارت سفارش */
+        .order-card {
+            width: 100%; max-width: 400px; background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(15px); border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 30px; padding: 25px; box-shadow: 0 15px 35px rgba(0,0,0,0.5);
         }
-        .input-group { margin-bottom: 15px; text-align: right; }
-        label { display: block; margin-bottom: 8px; font-size: 13px; color: #aaa; }
-        input, textarea {
-            width: 100%; padding: 12px; background: #000; border: 1px solid #333;
-            border-radius: 12px; color: #fff; outline: none; transition: 0.3s;
-        }
+        .input-group { margin-bottom: 18px; text-align: right; }
+        label { display: block; margin-bottom: 8px; color: #bbb; font-size: 13px; }
+        input, textarea { width: 100%; padding: 14px; background: rgba(0,0,0,0.6); border: 1px solid #333; border-radius: 12px; color: #fff; outline: none; }
         input:focus { border-color: var(--gold); }
 
-        .qty-control {
-            display: flex; align-items: center; justify-content: space-between;
-            background: #111; padding: 10px; border-radius: 15px; margin: 15px 0;
-        }
-        .qty-btn {
-            width: 40px; height: 40px; border-radius: 10px; border: none;
-            background: var(--gold); color: #000; font-size: 20px; cursor: pointer;
-        }
+        .qty-box { display: flex; align-items: center; justify-content: space-between; background: #000; border-radius: 15px; padding: 10px; border: 1px solid #444; margin-top: 10px; }
+        .qty-btn { width: 40px; height: 40px; border-radius: 10px; border: none; background: var(--gold); color: #000; font-size: 22px; cursor: pointer; }
 
-        .btn {
-            width: 100%; padding: 15px; border-radius: 15px; border: none;
-            font-weight: bold; cursor: pointer; transition: 0.3s; margin-top: 10px;
-        }
-        .btn-order { background: linear-gradient(90deg, #ff4d00, #e2b04a); color: #000; }
+        .btn { width: 100%; padding: 16px; border: none; border-radius: 15px; font-weight: bold; cursor: pointer; margin-top: 12px; font-size: 15px; display: flex; align-items: center; justify-content: center; gap: 8px; }
+        .btn-gold { background: linear-gradient(135deg, var(--gold), #b8860b); color: #000; }
         .btn-tg { background: #0088cc; color: #fff; }
-        .btn-wa { background: #25D366; color: #fff; }
+        .btn-sms { background: #ff9800; color: #fff; }
 
-        /* PWA Banner */
-        #installBanner {
-            position: fixed; bottom: 20px; background: #222; border: 1px solid var(--gold);
-            padding: 15px; border-radius: 15px; display: none; z-index: 1000; width: 90%; max-width: 350px;
-        }
-
-        .challenge-box {
-            background: rgba(255, 77, 0, 0.1); border: 1px dashed var(--fire);
-            padding: 15px; border-radius: 15px; text-align: center; margin: 20px 0;
-            text-decoration: none; display: block; color: #fff;
-        }
-
-        footer { text-align: center; margin-top: 40px; color: #666; font-size: 12px; line-height: 2; }
+        #installBanner { position: fixed; bottom: 20px; background: rgba(20,20,20,0.95); border: 1px solid var(--gold); width: 90%; max-width: 380px; padding: 15px; border-radius: 20px; display: none; z-index: 5000; }
     </style>
 </head>
 <body>
 
-    <div class="ticker-wrap"><div class="ticker" id="tickerText">به فروشگاه الو ذغال خوش آمدید 🔥 مرغوب‌ترین ذغال کبابی در ایذه</div></div>
-
-    <div class="stories-container" id="storiesWrapper">
-        </div>
-
-    <div class="header">
-        <img src="https://raw.githubusercontent.com/aloozoghal-hash/alozoghal/main/8f6dcedf3dc3dbaa82c0df548bd962c9.jpg" class="logo-circle">
-        <div class="brand-row">
-            <span class="fire">🔥</span>
-            <h1 class="brand-name">الو ذغال</h1>
-            <span class="fire">🔥</span>
-        </div>
-        <p style="color: var(--gold); margin-top: 5px;">سفارش آنلاین و سریع ذغال</p>
+    <div class="ticker-container">
+        <div class="ticker-text" id="tickerBox">🔥 الو ذغال: مرغوب‌ترین ذغال کبابی با ارسال برق‌آسا در ایذه 🔥</div>
     </div>
 
-    <div class="card" id="mainForm">
-        <div class="input-group">
-            <label>نام و نام خانوادگی:</label>
-            <input type="text" id="name" placeholder="مثلا: علی نادریان" oninput="checkAdmin(this.value)">
-        </div>
-        <div class="input-group">
-            <label>شماره تماس:</label>
-            <input type="tel" id="phone" placeholder="0916...">
-        </div>
-        <div class="input-group">
-            <label>آدرس دقیق:</label>
-            <textarea id="address" rows="2"></textarea>
-        </div>
-        <button class="btn" style="background: #333; color: #ccc;" onclick="getLocation()">📍 ثبت لوکیشن (GPS)</button>
+    <div class="stories-wrapper" id="storiesList"></div>
 
-        <div class="qty-control">
-            <span>ذغال کبابی (۶۵,۰۰۰ ت)</span>
-            <div style="display: flex; align-items: center; gap: 15px;">
-                <button class="qty-btn" onclick="changeQty(-1)">-</button>
-                <span id="qty">1</span>
-                <button class="qty-btn" onclick="changeQty(1)">+</button>
+    <div class="logo-area">
+        <img src="https://raw.githubusercontent.com/aloozoghal-hash/alozoghal/main/8f6dcedf3dc3dbaa82c0df548bd962c9.jpg" class="main-logo">
+        <div class="brand-container">
+            <span class="fire-anim">🔥</span>
+            <h1 style="color:var(--gold); font-size: 30px;">الو ذغال</h1>
+            <span class="fire-anim">🔥</span>
+        </div>
+        <p style="color: var(--royal); font-size: 14px; margin-top: 5px;">سفارش آنلاین و سریع ذغال</p>
+    </div>
+
+    <div class="order-card" id="appFrame">
+        <div id="formView">
+            <div class="input-group">
+                <label>👤 نام و نام خانوادگی:</label>
+                <input type="text" id="custName" oninput="checkSecret(this.value)" placeholder="برای مثال: علی نادریان">
+            </div>
+            <div class="input-group">
+                <label>📱 شماره تماس:</label>
+                <input type="tel" id="custPhone" placeholder="0916...">
+            </div>
+            <div class="input-group">
+                <label>🏠 آدرس محله/کوچه:</label>
+                <textarea id="custAddr" rows="2" placeholder="آدرس دقیق برای پیک..."></textarea>
+            </div>
+            <button class="btn" style="background: #333; color: #eee;" onclick="fetchGPS()">📍 ثبت لوکیشن (GPS)</button>
+
+            <div class="qty-box">
+                <span style="font-size: 14px;">ذغال کبابی (۶۵,۰۰۰ ت)</span>
+                <div style="display: flex; align-items: center; gap: 15px;">
+                    <button class="qty-btn" onclick="updateCount(-1)">-</button>
+                    <b id="countDisplay">1</b>
+                    <button class="qty-btn" onclick="updateCount(1)">+</button>
+                </div>
+            </div>
+
+            <button class="btn btn-gold" onclick="renderInvoice()">✨ مشاهده فاکتور و ثبت نهایی</button>
+
+            <a href="https://aloozoghal-hash.github.io/-Mir-mir-/" style="display:block; margin-top:20px; text-decoration:none; color:var(--gold); text-align:center; border:1px dashed var(--gold); padding:10px; border-radius:10px;">
+                🏆 چالش رو ببر ۳ کیسه ذغال جایزه بگیر
+            </a>
+        </div>
+
+        <div id="invoiceView" style="display: none;">
+            <h3 style="color:var(--gold); text-align:center; margin-bottom:15px;">📑 پیش‌فاکتور سفارش</h3>
+            <div id="invDetails" style="font-size: 14px; line-height: 2; border-bottom: 1px solid #444; padding-bottom: 15px;"></div>
+            <button class="btn btn-tg" id="tgBtn" onclick="sendTelegram()">🚀 ثبت آنی در تلگرام</button>
+            <button class="btn btn-sms" onclick="sendSMS()">📩 ارسال پیامک به مدیر</button>
+            <button class="btn" style="background:#25D366; color:#fff;" onclick="sendWhatsApp()">🟢 ارسال در واتساپ</button>
+            <button class="btn" style="background:#444;" onclick="backToEdit()">اصلاح سفارش</button>
+        </div>
+    </div>
+
+    <div id="story-modal">
+        <div class="story-progress-container" id="progressContainer"></div>
+        <span class="story-close" onclick="closeStories()">&times;</span>
+        <div class="story-content">
+            <img id="storyImg" class="story-img">
+            <div class="story-info">
+                <h3 id="storyTitle" style="color: var(--gold);"></h3>
+                <p id="storyDesc" style="font-size: 13px; color: #ccc; margin: 10px 0;"></p>
+                <a id="storyCall" class="btn-call-story">📞 تماس مستقیم</a>
             </div>
         </div>
-
-        <div id="totalPrice" style="text-align: center; margin: 15px 0; color: var(--gold); font-weight: bold;">
-            مبلغ قابل پرداخت: ۶۵,۰۰۰ تومان
-        </div>
-
-        <button class="btn btn-order" onclick="showInvoice()">🛒 ثبت و مشاهده فاکتور</button>
     </div>
 
-    <div class="card" id="invoice" style="display: none;">
-        <h3 style="text-align: center; color: var(--gold);">فاکتور نهایی</h3>
-        <hr style="opacity: 0.1; margin: 15px 0;">
-        <div id="invoiceDetails" style="line-height: 2; font-size: 14px;"></div>
-        <button class="btn btn-tg" id="tgBtn" onclick="sendToTelegram()">✈️ ارسال به تلگرام (ثبت آنی)</button>
-        <button class="btn btn-wa" onclick="sendToWhatsApp()">📱 ارسال به واتساپ</button>
-        <button class="btn" style="background: #555;" onclick="resetForm()">✏️ ویرایش سفارش</button>
+    <div id="adminPanel" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.95); z-index:10000; padding:20px; overflow-y:auto;">
+        <h2 style="color:var(--gold)">🛠 پنل مدیریت آگهی و تیکر</h2>
+        <input type="text" id="admTicker" placeholder="متن متحرک جدید" style="margin-top:20px;">
+        <hr style="margin:20px 0; opacity:0.2;">
+        <input type="text" id="admTitle" placeholder="اسم کسب و کار">
+        <input type="text" id="admDesc" placeholder="توضیح آگهی">
+        <input type="text" id="admImg" placeholder="لینک عکس استوری">
+        <input type="text" id="admPhone" placeholder="شماره تماس">
+        <button class="btn btn-gold" onclick="makeJSON()">تولید کد JSON</button>
+        <textarea id="jsonBox" rows="6" style="margin-top:15px; font-size:11px;" readonly></textarea>
+        <button class="btn" style="background:#8b0000;" onclick="location.reload()">خروج</button>
     </div>
-
-    <a href="https://aloozoghal-hash.github.io/-Mir-mir-/" class="challenge-box">
-        🎁 چالش الو ذغال رو ببر ۳ کیسه ذغال جایزه بگیر
-    </a>
-
-    <footer>
-        <p>الو ذغال از دل ایذه برای سفره‌های باصفای شما.<br>هدف ما رساندن مرغوب‌ترین ذغال کباب در کمترین زمان است.</p>
-        <p>تمامی حقوق محفوظ است | ساخته شده با ❤️ برای ایذه</p>
-    </footer>
 
     <div id="installBanner">
-        <div style="display: flex; align-items: center; gap: 10px;">
-            <img src="https://raw.githubusercontent.com/aloozoghal-hash/alozoghal/main/8f6dcedf3dc3dbaa82c0df548bd962c9.jpg" width="40" style="border-radius: 5px;">
-            <div style="flex: 1; font-size: 12px;">نصب اپلیکیشن الو ذغال برای دسترسی سریع</div>
-            <button onclick="installPWA()" style="background: var(--gold); border: none; padding: 5px 10px; border-radius: 5px;">نصب</button>
+        <div style="display:flex; align-items:center; gap:12px;">
+            <img src="https://raw.githubusercontent.com/aloozoghal-hash/alozoghal/main/8f6dcedf3dc3dbaa82c0df548bd962c9.jpg" width="50" style="border-radius:10px;">
+            <div style="flex:1; font-size:13px;"><b>نصب اپلیکیشن الو ذغال</b><br>برای سفارش سریع‌تر کلیک کنید</div>
+            <button onclick="doInstall()" style="background:var(--gold); border:none; padding:8px 15px; border-radius:8px; font-weight:bold;">نصب</button>
         </div>
     </div>
 
-    <div id="adminModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); z-index:2000; padding:20px; overflow-y:auto;">
-        <h2 style="color:var(--gold)">پنل مدیریت آگهی</h2>
-        <input type="text" id="adTitle" placeholder="نام کسب و کار" style="margin-top:10px;">
-        <input type="text" id="adDesc" placeholder="توضیح کوتاه">
-        <input type="text" id="adImg" placeholder="لینک عکس (مستقیم)">
-        <input type="text" id="adPhone" placeholder="شماره تماس آگهی دهنده">
-        <input type="text" id="tickerMsg" placeholder="متن کادر متحرک بالای سایت">
-        <button class="btn btn-order" onclick="generateJson()">ساخت کد JSON</button>
-        <textarea id="jsonOutput" rows="5" style="margin-top:10px; font-size:10px;" readonly></textarea>
-        <p style="font-size:10px; color:#666;">کد بالا را کپی کرده و در فایل ads.json گیت‌هاب قرار دهید.</p>
-        <button class="btn" onclick="document.getElementById('adminModal').style.display='none'">بستن</button>
-    </div>
+    <footer style="margin-top:40px; text-align:center; padding:20px; border-top:1px solid #222;">
+        <p style="font-size:13px; color:#aaa; line-height:1.8;">الو ذغال از دل ایذه برای سفره‌های باصفای شما. هدف ما رساندن مرغوب‌ترین ذغال کباب در کمترین زمان است.</p>
+        <p style="color:var(--gold); font-size:12px; margin-top:10px;">تمامی حقوق محفوظ است | ساخته شده با ❤️ برای ایذه</p>
+    </footer>
 
     <script>
-        let count = 1;
-        let gpsLocation = "";
+        let itemsCount = 1;
+        let gpsData = "";
+        let adsData = [];
+        let currentStoryIdx = 0;
+        let storyTimer;
         const GOOGLE_BRIDGE_URL = "https://script.google.com/macros/s/AKfycbyLQjEqmjs5Re2m7nf3lGU_IZQU0ILuFgiJWxrEQ306AgUy1zW090quuwv1QLWVOQyV/exec";
-        
-        // Load Ads
+
+        // سیستم استوری
         async function loadAds() {
             try {
-                const response = await fetch('ads.json');
-                const data = await response.json();
-                if(data.ticker) document.getElementById('tickerText').innerText = data.ticker;
-                const wrapper = document.getElementById('storiesWrapper');
-                data.ads.forEach(ad => {
-                    wrapper.innerHTML += `
-                        <div class="story" onclick="alert('${ad.desc}\\nتماس: ${ad.phone}')">
+                const res = await fetch('ads.json');
+                const data = await res.json();
+                if(data.ticker) document.getElementById('tickerBox').innerText = data.ticker;
+                adsData = data.ads;
+                const list = document.getElementById('storiesList');
+                adsData.forEach((ad, idx) => {
+                    list.innerHTML += `
+                        <div class="story-item" onclick="openStories(${idx})">
                             <div class="story-ring"><img src="${ad.img}"></div>
                             <span>${ad.title}</span>
                         </div>`;
                 });
-            } catch (e) { console.log("Ads not found"); }
+            } catch(e) { console.log("Ads Load Error"); }
         }
 
-        function changeQty(v) {
-            count = Math.max(1, count + v);
-            document.getElementById('qty').innerText = count;
-            document.getElementById('totalPrice').innerText = `مبلغ قابل پرداخت: ${(count * 65000).toLocaleString()} تومان`;
+        function openStories(idx) {
+            currentStoryIdx = idx;
+            document.getElementById('story-modal').style.display = 'flex';
+            showStory();
         }
 
-        function getLocation() {
+        function showStory() {
+            clearTimeout(storyTimer);
+            const ad = adsData[currentStoryIdx];
+            document.getElementById('storyImg').src = ad.img;
+            document.getElementById('storyTitle').innerText = ad.title;
+            document.getElementById('storyDesc').innerText = ad.desc;
+            document.getElementById('storyCall').href = `tel:${ad.phone}`;
+
+            // نوار پیشرفت
+            const progContainer = document.getElementById('progressContainer');
+            progContainer.innerHTML = '';
+            adsData.forEach((_, i) => {
+                const fillWidth = i < currentStoryIdx ? '100%' : (i === currentStoryIdx ? '0%' : '0%');
+                progContainer.innerHTML += `<div class="story-progress-bg"><div class="story-progress-fill" id="fill-${i}" style="width:${fillWidth}"></div></div>`;
+            });
+
+            const currentFill = document.getElementById(`fill-${currentStoryIdx}`);
+            let width = 0;
+            const interval = setInterval(() => {
+                width += 1;
+                currentFill.style.width = width + '%';
+                if (width >= 100) {
+                    clearInterval(interval);
+                    nextStory();
+                }
+            }, 100); // 10 ثانیه (100 * 100ms)
+
+            storyTimer = interval;
+        }
+
+        function nextStory() {
+            if (currentStoryIdx < adsData.length - 1) {
+                currentStoryIdx++;
+                showStory();
+            } else {
+                closeStories();
+            }
+        }
+
+        function closeStories() {
+            clearInterval(storyTimer);
+            document.getElementById('story-modal').style.display = 'none';
+        }
+
+        // مدیریت سفارش
+        function updateCount(v) {
+            itemsCount = Math.max(1, itemsCount + v);
+            document.getElementById('countDisplay').innerText = itemsCount;
+        }
+
+        function fetchGPS() {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(p => {
-                    gpsLocation = `https://www.google.com/maps?q=${p.coords.latitude},${p.coords.longitude}`;
-                    alert("✅ لوکیشن با موفقیت ثبت شد.");
+                    gpsData = `https://www.google.com/maps?q=${p.coords.latitude},${p.coords.longitude}`;
+                    alert("✅ لوکیشن با موفقیت ضمیمه سفارش شد.");
                 });
             }
         }
 
-        function checkAdmin(val) {
+        function checkSecret(val) {
             if(val === "علی نادریان 1362541") {
-                document.getElementById('adminModal').style.display = 'block';
+                document.getElementById('adminPanel').style.display = 'block';
             }
         }
 
-        function generateJson() {
-            const newAd = {
-                ticker: document.getElementById('tickerMsg').value,
-                ads: [{
-                    title: document.getElementById('adTitle').value,
-                    desc: document.getElementById('adDesc').value,
-                    img: document.getElementById('adImg').value,
-                    phone: document.getElementById('adPhone').value
-                }]
-            };
-            document.getElementById('jsonOutput').value = JSON.stringify(newAd, null, 2);
-        }
-
-        function showInvoice() {
-            const name = document.getElementById('name').value;
-            if(!name) return alert("نام را وارد کنید");
-            const total = count * 65000;
-            window.finalMsg = `🛍️ سفارش جدید از سایت\n👤 نام: ${name}\n📞 تماس: ${document.getElementById('phone').value}\n📦 تعداد: ${count} کیسه ذغال\n💰 مبلغ: ${total.toLocaleString()} تومان\n🏠 آدرس: ${document.getElementById('address').value}\n📍 لوکیشن: ${gpsLocation}`;
+        function renderInvoice() {
+            const name = document.getElementById('custName').value;
+            const phone = document.getElementById('custPhone').value;
+            const addr = document.getElementById('custAddr').value;
+            if(!name || !phone || !addr) return alert("لطفا تمامی فیلدها را پر کنید");
             
-            document.getElementById('invoiceDetails').innerHTML = window.finalMsg.replace(/\n/g, '<br>');
-            document.getElementById('mainForm').style.display = 'none';
-            document.getElementById('invoice').style.display = 'block';
+            const total = itemsCount * 65000;
+            window.finalMsg = `🛍️ سفارش جدید الو ذغال\n👤 نام: ${name}\n📞 تماس: ${phone}\n📦 مقدار: ${itemsCount} کیسه ذغال\n💰 مبلغ: ${total.toLocaleString()} تومان\n🏠 آدرس: ${addr}\n📍 لوکیشن: ${gpsData || "ثبت نشده"}`;
+            
+            document.getElementById('invDetails').innerText = window.finalMsg;
+            document.getElementById('formView').style.display = 'none';
+            document.getElementById('invoiceView').style.display = 'block';
         }
 
-        async function sendToTelegram() {
-            const btn = document.getElementById('tgBtn'); 
-            btn.disabled = true; 
+        async function sendTelegram() {
+            const btn = document.getElementById('tgBtn');
             btn.innerText = "⏳ در حال ارسال سیستمی...";
             try {
-                await fetch(GOOGLE_BRIDGE_URL, {
-                    method: 'POST',
-                    mode: 'no-cors',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ message: window.finalMsg })
-                });
-                alert("✅ سفارش ثبت شد! سبد خرید خالی گردید.");
-                resetForm();
-            } catch (e) { alert("خطا در ارسال."); }
-            finally { btn.disabled = false; btn.innerText = "✈️ ثبت آنی و سریع"; }
+                await fetch(GOOGLE_BRIDGE_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify({ message: window.finalMsg }) });
+                alert("✅ سفارش شما با موفقیت ثبت شد!");
+                location.reload();
+            } catch(e) { alert("خطا در ارسال."); }
         }
 
-        function sendToWhatsApp() {
-            const url = `https://wa.me/989220730628?text=${encodeURIComponent(window.finalMsg)}`;
-            window.open(url);
+        function sendSMS() {
+            const msg = encodeURIComponent(window.finalMsg);
+            window.location.href = `sms:09220730628?body=${msg}`;
         }
 
-        function resetForm() {
-            document.getElementById('mainForm').style.display = 'block';
-            document.getElementById('invoice').style.display = 'none';
-            count = 1; changeQty(0);
+        function sendWhatsApp() {
+            window.open(`https://wa.me/989220730628?text=${encodeURIComponent(window.finalMsg)}`);
         }
 
-        // PWA Logic
+        function backToEdit() {
+            document.getElementById('formView').style.display = 'block';
+            document.getElementById('invoiceView').style.display = 'none';
+        }
+
+        function makeJSON() {
+            const data = {
+                ticker: document.getElementById('admTicker').value,
+                ads: [{
+                    title: document.getElementById('admTitle').value,
+                    desc: document.getElementById('admDesc').value,
+                    img: document.getElementById('admImg').value,
+                    phone: document.getElementById('admPhone').value
+                }]
+            };
+            document.getElementById('jsonBox').value = JSON.stringify(data, null, 2);
+        }
+
+        // PWA
         let deferredPrompt;
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
             deferredPrompt = e;
-            if(!localStorage.getItem('pwaInstalled')) {
-                document.getElementById('installBanner').style.display = 'block';
-            }
+            if(!localStorage.getItem('isAppInstalled')) document.getElementById('installBanner').style.display = 'block';
         });
 
-        function installPWA() {
+        function doInstall() {
             deferredPrompt.prompt();
-            deferredPrompt.userChoice.then((choice) => {
-                if (choice.outcome === 'accepted') {
-                    localStorage.setItem('pwaInstalled', 'true');
+            deferredPrompt.userChoice.then(res => {
+                if(res.outcome === 'accepted') {
+                    localStorage.setItem('isAppInstalled', 'true');
                     document.getElementById('installBanner').style.display = 'none';
                 }
             });
