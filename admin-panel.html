@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <title>مدیریت محتوا</title>
+    <style>
+        body { background: #111; color: #fff; font-family: tahoma; padding: 20px; text-align: center; }
+        .box { background: #222; border: 1px solid gold; padding: 15px; border-radius: 10px; margin-bottom: 20px; }
+        input, textarea { width: 90%; padding: 10px; margin: 10px 0; background: #000; color: #fff; border: 1px solid #444; }
+        button { background: gold; color: #000; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold; }
+        .danger { background: #ff4d00; color: #fff; margin-top: 5px; font-size: 11px; }
+    </style>
+</head>
+<body>
+    <h2>🛠 تنظیمات سایت الو ذغال</h2>
+    
+    <div class="box">
+        <h3>📢 متن روان بالا (تیکر)</h3>
+        <input type="text" id="tText" placeholder="مثلا: تخفیف ویژه برای خرید بالای ۳ کیسه">
+        <button onclick="saveT()">ثبت متن</button>
+    </div>
+
+    <div class="box">
+        <h3>📸 افزودن استوری</h3>
+        <input type="text" id="sTitle" placeholder="نام فروشگاه یا عنوان">
+        <input type="text" id="sImg" placeholder="لینک عکس">
+        <input type="text" id="sPhone" placeholder="شماره تماس">
+        <button onclick="addS()">افزودن استوری</button>
+        <button class="danger" onclick="localStorage.removeItem('aloo_stories'); alert('حذف شد');">پاکسازی همه استوری‌ها</button>
+    </div>
+
+    <div class="box">
+        <h3>💎 تبلیغ ویژه VIP</h3>
+        <input type="text" id="vTitle" placeholder="عنوان تبلیغ">
+        <textarea id="vDesc" placeholder="توضیحات کوتاه"></textarea>
+        <input type="text" id="vImg" placeholder="لینک عکس">
+        <input type="text" id="vPhone" placeholder="شماره تماس">
+        <button onclick="saveV()">بروزرسانی VIP</button>
+        <button class="danger" onclick="localStorage.removeItem('aloo_vip'); alert('حذف شد');">حذف تبلیغ VIP</button>
+    </div>
+
+    <button onclick="window.location.href='index.html'" style="background:#555; color:#fff">مشاهده سایت</button>
+
+    <script>
+        function saveT() { localStorage.setItem('aloo_ticker', document.getElementById('tText').value); alert('ذخیره شد'); }
+        function addS() {
+            const list = JSON.parse(localStorage.getItem('aloo_stories') || '[]');
+            list.push({ title: document.getElementById('sTitle').value, img: document.getElementById('sImg').value, phone: document.getElementById('sPhone').value });
+            localStorage.setItem('aloo_stories', JSON.stringify(list));
+            alert('اضافه شد');
+        }
+        function saveV() {
+            const vip = { title: document.getElementById('vTitle').value, desc: document.getElementById('vDesc').value, img: document.getElementById('vImg').value, phone: document.getElementById('vPhone').value };
+            localStorage.setItem('aloo_vip', JSON.stringify(vip));
+            alert('VIP ثبت شد');
+        }
+    </script>
+</body>
+</html>
