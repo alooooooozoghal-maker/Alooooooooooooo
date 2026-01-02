@@ -1,14 +1,14 @@
 {
-  "name": "الو ذغال ایذه",
+  "name": "Alo Zoghal",
   "short_name": "الو ذغال",
   "start_url": "index.html",
   "display": "standalone",
-  "background_color": "#050505",
-  "theme_color": "#ff4d00",
+  "background_color": "#0a0a0a",
+  "theme_color": "#e2b04a",
   "icons": [
     {
-      "src": "https://raw.githubusercontent.com/aloozoghal-hash/alozoghal/main/8f6dcedf3dc3dbaa82c0df548bd962c9.jpg",
-      "sizes": "512x512",
+      "src": "https://raw.githubusercontent.com/alooooooozoghal-maker/alozoghal/main/8f6dcedf3dc3dbaa82c0df548bd962c9.jpg",
+      "sizes": "192x192",
       "type": "image/jpg"
     }
   ]
